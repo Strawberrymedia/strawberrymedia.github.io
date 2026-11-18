@@ -1,0 +1,5 @@
+# Originals stay on the Mac only. Only the locked copies in public/ are uploaded.
+public-encrypted/
+.env
+.env.*
+.DS_Store
