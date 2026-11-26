@@ -2502,3 +2502,6 @@ section:nth-child(even) .archetype-hook { background: var(--bg-card); }
 .sidebar-page-btn::before { content: none; display: none; }
 /* Anchor card parts stack on separate lines. */
 .anchor-card-num, .anchor-card-title, .anchor-card-desc { display: block; }
+/* No green left-edge accent on cards (Trinity, 26/11/26). */
+.hk-tier1-card, .rv-decision-given[data-state="approve"], .theme-card.competitor-a, .win-lose-card.win,
+.kw-headline-tile.rising, .trend-feature.up, .archetype-card.priority-p1 { border-left: 1px solid var(--border, #e6e7e8); }
