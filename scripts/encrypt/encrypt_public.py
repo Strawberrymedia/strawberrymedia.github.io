@@ -138,8 +138,21 @@ IN_CI = bool(os.environ.get("CI") or os.environ.get("GITHUB_ACTIONS"))
 
 
 # ---------------------------------------------------------------- passwords
+# Multi-page dashboards: every page under one of these folders shares a single password, derived from the
+# folder path instead of the file path (Trinity's choice, 26/11/26). All other pages keep a per-file password.
+SHARED_PASSWORD_FOLDERS = ("pollinate/meta-ads-musculoskeletal",)
+
+
+def password_key(relative_path: str) -> str:
+    for folder in SHARED_PASSWORD_FOLDERS:
+        if relative_path.startswith(folder.rstrip("/") + "/"):
+            return folder.rstrip("/") + "/"
+    return relative_path
+
+
 def derive_password(master_secret: str, relative_path: str) -> str:
-    digest = hmac.new(master_secret.encode("utf-8"), relative_path.encode("utf-8"), hashlib.sha256).digest()
+    key = password_key(relative_path)
+    digest = hmac.new(master_secret.encode("utf-8"), key.encode("utf-8"), hashlib.sha256).digest()
     return base64.urlsafe_b64encode(digest)[:24].decode("ascii")
 
 
